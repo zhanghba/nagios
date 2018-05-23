@@ -30,3 +30,25 @@ centos：setup/nagios_client/centos.sh
 ##插件脚本
 
 aaa
+
+###客户端添加需要监控的utl
+编辑/usr/local/nagios/etc/nrpe.cfg 在文件结尾添加：command[check_webpage_jira]=/usr/local/nagios/libexec/check_http -l hosts -p 8080 -u "/secure/Dashboard.jspa" -w 10 -c 20
+#重启
+/root/restart_nrpe.sh  
+
+###服务端添加需要监控的nrpe服务器
+#1
+define host{
+        use             linux-server    ; Inherit default values from a template
+        host_name       host    ; The name we're giving to this host
+        alias           My Linux Server ; A longer name associated with the host
+        address         host    ; IP address of the host
+        check_command   check-host-alive
+        }
+        >>/usr/local/nagios/etc/objects/hosts.cfg
+#2 vi /usr/local/nagios/etc 添加下面命令
+
+cfg_file=/usr/local/nagios/etc/objects/hosts.cfg
+
+#3 重启nagios服务
+ service nagios restart
