@@ -45,10 +45,24 @@ define host{
         address         host    ; IP address of the host
         check_command   check-host-alive
         }
+define service{
+        use                     generic-service
+        host_name               host
+        service_description             jira
+        check_command           check_nrpe!check_webpage_jira
+        }
+
         >>/usr/local/nagios/etc/objects/hosts.cfg
 #2 vi /usr/local/nagios/etc 添加下面命令
 
 cfg_file=/usr/local/nagios/etc/objects/hosts.cfg
+
+# 3 vi /usr/local/nagios/etc/objects/commands.cfg 添加下面命令
+define command{
+        command_name check_nrpe
+        command_line $USER1$/check_nrpe -H "$HOSTADDRESS$" -c "$ARG1$"
+        }
+
 
 #3 重启nagios服务
  service nagios restart
