@@ -20,12 +20,12 @@ yum install -y wget gcc gcc++ gcc* bc net-snmp net-snmp-utils net-snmp-libs  lib
 
 cd /usr/local/src
 
-if [ -f nagios-4.3.4.tar.gz ]
+if [ -f nagios-4.0.8.tar.gz ]
 then
      echo ".........................................nagios.tar.gz..................is OK!!!"
 else
      echo "nagios.tar.gz.............................is not ok!!!..................download"
-     wget http://jaist.dl.sourceforge.net/project/nagios/nagios-4.x/nagios-4.3.4/nagios-4.3.4.tar.gz
+     wget http://jaist.dl.sourceforge.net/project/nagios/nagios-4.x/nagios-4.0.8/nagios-4.0.8.tar.gz
 fi
 
 #http://www.nagios-plugins.org/download/nagios-plugins-2.1.1.tar.gz
@@ -56,8 +56,8 @@ groupadd nagcmd
 ###daemon 为apache运行账号：
 usermod -a -G nagcmd daemon
 
-###install nagios-4.3.4.tar.gz
-tar -zxf nagios-4.3.4.tar.gz && cd nagios-4.3.4
+###install nagios-4.0.8.tar.gz
+tar -zxf nagios-4.0.8.tar.gz && cd nagios-4.0.8
 ./configure --with-command-group=nagcmd --with-gd-lib=/usr/local/libgd/lib/ --with-gd-inc=/usr/local/libgd/include/
 make all
 make install
